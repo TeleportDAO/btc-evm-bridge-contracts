@@ -1,0 +1,7 @@
+{
+	"proxy_admin": "0x4565aE5c90E52c058410fC7f05711fFed9b6e62a",
+	"bitcoin_network": "mainnet",
+	"finalizationParameter": 3,
+	"relayerPercentageFee": 500,
+	"submissionGasUsed": 300000
+}

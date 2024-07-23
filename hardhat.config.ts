@@ -24,6 +24,11 @@ const config: HardhatUserConfig = {
 		],
 	},
 	networks: {
+		bob: {
+			url: "https://rpc.gobob.xyz/",
+			chainId: 60808,
+			accounts: [process.env.PRIVATE_KEY ?? ""],
+		},
 		bsquared: {
 			url: "https://rpc.bsquared.network",
 			chainId: 223,
@@ -68,7 +73,8 @@ const config: HardhatUserConfig = {
 			bsquared: process.env.ETHERSCAN_API_KEY??"",
     		polygon: process.env.ETHERSCAN_API_KEY??"",
 			bsc: process.env.ETHERSCAN_API_KEY??"",
-			amoy: process.env.ETHERSCAN_API_KEY??""
+			amoy: process.env.ETHERSCAN_API_KEY??"",
+			bob: process.env.ETHERSCAN_API_KEY??"",
   		},
 		customChains: [
 			{
@@ -77,6 +83,14 @@ const config: HardhatUserConfig = {
 				urls: {
 					apiURL: "https://explorer.bsquared.network/api",
 					browserURL: "https://explorer.bsquared.network"
+				}
+			},
+			{
+				network: "bob",
+				chainId: 60808,
+				urls: {
+					apiURL: "https://explorer.gobob.xyz/api",
+					browserURL: "https://explorer.gobob.xyz/"
 				}
 			},
 			{
