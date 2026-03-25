@@ -20,36 +20,87 @@ const config: HardhatUserConfig = {
 						enabled: true
 					},
 				},
+			},
+			{
+				version: "0.8.2",
+				settings: {
+					optimizer: {
+						enabled: true
+					},
+				},
 			}
 		],
 	},
 	networks: {
-		bob: {
-			url: "https://rpc.gobob.xyz/",
-			chainId: 60808,
+		ethereum: {
+			url: "https://eth.drpc.org",
+			chainId: 1,
+			accounts: [process.env.PRIVATE_KEY ?? ""]
+		},
+		arbitrum: {
+			url: "https://arbitrum-one.publicnode.com",
+			chainId: 42161,
+			accounts: [process.env.PRIVATE_KEY ?? ""]
+		},
+		optimism: {
+			url: "https://optimism-rpc.publicnode.com",
+			chainId: 10,
+			accounts: [process.env.PRIVATE_KEY ?? ""]
+		},
+		sepolia: {
+			url: "https://ethereum-sepolia-rpc.publicnode.com",
+			chainId: 11155111,
+			accounts: [process.env.PRIVATE_KEY ?? ""]
+		},
+		polygon: {
+			url: "https://rpc-mainnet.matic.quiknode.pro",
+			chainId: 137,
 			accounts: [process.env.PRIVATE_KEY ?? ""],
+		},
+		base: {
+			url: "https://developer-access-mainnet.base.org",
+			chainId: 8453,
+			accounts: [process.env.PRIVATE_KEY ?? ""]
+		},
+		unichain: {
+			url: "https://mainnet.unichain.org",
+			chainId: 130,
+			accounts: [process.env.PRIVATE_KEY ?? ""]
+		},
+		worldchain: {
+			url: "https://worldchain-mainnet.g.alchemy.com/public",
+			chainId: 480,
+			accounts: [process.env.PRIVATE_KEY ?? ""]
 		},
 		bsquared: {
 			url: "https://rpc.bsquared.network",
 			chainId: 223,
 			accounts: [process.env.PRIVATE_KEY ?? ""],
 		},
-		polygon: {
-			url: "https://polygon-rpc.com",
-			chainId: 137,
-			accounts: [process.env.PRIVATE_KEY ?? ""],
-		},
 		amoy: {
 			url: "https://rpc-amoy.polygon.technology",
 			chainId: 80002,
-			accounts: [process.env.PRIVATE_KEY ?? ""],
+			accounts: [process.env.PRIVATE_KEY ?? ""]
 		},
 		bsc: {
-			url: "https://bsc-dataseed.binance.org/",
+			url: "https://bsc.api.pocket.network",
 			chainId: 56,
+			accounts: [process.env.PRIVATE_KEY ?? ""]
+		},
+		bob: {
+			url: "https://rpc.gobob.xyz/",
+			chainId: 60808,
 			accounts: [process.env.PRIVATE_KEY ?? ""],
 		},
-	},	
+		plasma: {
+			url: "https://rpc.plasma.to",
+			chainId: 9745,
+			accounts: [process.env.PRIVATE_KEY ?? ""],
+		},
+		hardhat: {
+			allowUnlimitedContractSize: true,
+		},
+	},
   	paths: {
 		artifacts: "artifacts",
 		deploy: "deploy",
@@ -69,14 +120,73 @@ const config: HardhatUserConfig = {
 		currency: "USD",
   	},
   	etherscan: {
-		apiKey: {
-			bsquared: process.env.ETHERSCAN_API_KEY??"",
-    		polygon: process.env.ETHERSCAN_API_KEY??"",
-			bsc: process.env.ETHERSCAN_API_KEY??"",
-			amoy: process.env.ETHERSCAN_API_KEY??"",
-			bob: process.env.ETHERSCAN_API_KEY??"",
-  		},
+		enabled: true,
+		apiKey: process.env.ETHERSCAN_API_KEY ?? "",
 		customChains: [
+			{
+				network: "ethereum",
+				chainId: 1,
+				urls: {
+					apiURL: "https://api.etherscan.io/v2/api?chainid=1",
+					browserURL: "https://etherscan.io/"
+				}
+			},
+			{
+				network: "polygon",
+				chainId: 137,
+				urls: {
+					apiURL: "https://api.etherscan.io/v2/api?chainid=137",
+					browserURL: "https://polygonscan.com/"
+				}
+			},
+			{
+				network: "base",
+				chainId: 8453,
+				urls: {
+					apiURL: "https://api.etherscan.io/v2/api?chainid=8453",
+					browserURL: "https://basescan.org/"
+				}
+			},
+			{
+				network: "bsc",
+				chainId: 56,
+				urls: {
+					apiURL: "https://api.etherscan.io/v2/api?chainid=56",
+					browserURL: "https://bscscan.com/"
+				}
+			},
+			{
+				network: "arbitrum",
+				chainId: 42161,
+				urls: {
+					apiURL: "https://api.etherscan.io/v2/api?chainid=42161",
+					browserURL: "https://arbiscan.com/"
+				}
+			},
+			{
+				network: "optimism",
+				chainId: 10,
+				urls: {
+					apiURL: "https://api.etherscan.io/v2/api?chainid=10",
+					browserURL: "https://optimism.etherscan.io/"
+				}
+			},
+			{
+				network: "unichain",
+				chainId: 130,
+				urls: {
+					apiURL: "https://api.etherscan.io/v2/api?chainid=130",
+					browserURL: "https://uniscan.xyz/"
+				}
+			},
+			{
+				network: "worldchain",
+				chainId: 480,
+				urls: {
+					apiURL: "https://api.worldscan.org/api",
+					browserURL: "https://worldscan.org/"
+				}
+			},
 			{
 				network: "bsquared",
 				chainId: 223,
@@ -89,24 +199,16 @@ const config: HardhatUserConfig = {
 				network: "bob",
 				chainId: 60808,
 				urls: {
-					apiURL: "https://explorer.gobob.xyz/api",
-					browserURL: "https://explorer.gobob.xyz/"
+					apiURL: "https://www.oklink.com/api/v5/explorer/contract/verify-source-code-plugin/BOB",
+					browserURL: "https://www.oklink.com/bob"
 				}
 			},
 			{
-				network: "polygon",
-				chainId: 137,
+				network: "plasma",
+				chainId: 9745,
 				urls: {
-					apiURL: "https://api.polygonscan.com/api",
-					browserURL: "https://polygonscan.com/"
-				}
-			},
-			{
-				network: "bsc",
-				chainId: 56,
-				urls: {
-					apiURL: "https://api.bscscan.com/api",
-					browserURL: "https://bscscan.com/"
+					apiURL: "https://api.routescan.io/v2/network/mainnet/evm/9745/etherscan",
+					browserURL: "https://plasmascan.to/"
 				}
 			},
 			{
@@ -116,9 +218,20 @@ const config: HardhatUserConfig = {
 					apiURL: "https://api-amoy.polygonscan.com/api",
 					browserURL: "https://amoy.polygonscan.com/"
 				}
+			},
+			{
+				network: "sepolia",
+				chainId: 11155111,
+				urls: {
+					apiURL: "https://api-sepolia.etherscan.io/api",
+					browserURL: "https://sepolia.etherscan.io/"
+				}
 			}
 		]
   	},
+  	sourcify: {
+		enabled: false
+  	}
 };
 
 export default config;
